@@ -1,0 +1,41 @@
+#!/bin/bash
+
+#SBATCH -o job_yin.out
+
+#SBATCH -p   v100-quad                ####### this is the GPU node name
+
+#SBATCH --qos=normal
+
+#SBATCH -J YINjob
+
+#SBATCH --nodes=1
+
+#SBATCH --ntasks-per-node=8           ####### I request here eight CPU threads-------------
+
+#SBATCH --cpus-per-task=1             ####### one task per CPU thread
+
+#SBATCH --mem=12G                     ####### I request 12 G memory on host side (CPU memmory)
+
+#SBATCH -q gpu                        ####### tell the superPC that I gonna use GPU
+
+#SBATCH --gres=gpu:1                  ####### I request one GPU card, 
+
+####### one GPU card has many many many threads, 
+####### so that multiple tasks can be run on one GPU card
+####### So, one does not have to care about the number of tasks on one GPU
+####### But the occupied GPU memeory cannot exceed the maximum GPU memory, otherwise task fails
+####### To check GPU card memory and other parameters, please log in the GPU node with interactive mode (see the bash code below)
+############## the below is the interactive mode command (an example)
+############## the below is the interactive mode command (an example)
+############## the below is the interactive mode command (an example)
+############## srun -N 1 --ntasks-per-node 1 -p v100-quad -q gpu --gres=gpu:1 --mem=10G --pty /bin/bash
+
+bash run_DFN_1.sh &                   ####### because I resquest eight CPU thread and one GPU card, 
+bash run_DFN_2.sh &                   ####### I can run eight tasks at the same time.
+bash run_DFN_3.sh &
+bash run_DFN_4.sh &
+bash run_DFN_5.sh &
+bash run_DFN_6.sh &
+bash run_DFN_7.sh &
+bash run_DFN_8.sh &
+wait
